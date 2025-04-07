@@ -2,7 +2,8 @@ const mongoose=require("mongoose");
 const initData=require("./data.js");
 const Listing=require("../models/listing.js");
 
-const MONO_URL="mongodb://127.0.0.1:27017/wanderlust";
+
+ const MONO_URL="mongodb://127.0.0.1:27017/wanderlust";
 
 main()
 .then(()=>{
@@ -22,7 +23,7 @@ const initDB=async()=>{
         owner:"67a4f6af6860ee478bec6a9e",
     }));
     await Listing.insertMany(initData.data);
-    console.log("data was initialized");
+    console.log("Data was initialized");
 };
 
 initDB();

@@ -30,19 +30,22 @@ module.exports.showListing=async(req,res)=>{
 module.exports.createListing=async(req,res,next)=>{
     let url=req.file.path;
     let filename=req.file.filename;
+    const listing = await Listing.findById(req.params.id);
 
     const newListing=new Listing({...req.body.listing,
-        // image: {
-        //   filename: "listingimage", 
-        //   url: "https://images.unsplash.com/photo-1735669356374-8ea7506cd1d2?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Replace with the actual URL
-        // }
+        rating: Number(req.body.review.rating),
+        author: req.user._id
     });
     newListing.owner=req.user._id;
     newListing.image={url,filename};
+    listing.reviews.push(newReview); 
+    await newReview.save();
     await newListing.save();
     req.flash("success","New Listing Created!");
     res.redirect("/listings");
  };
+
+
 
  module.exports.renderEditForm=async(req,res)=>{
      let{id}=req.params;

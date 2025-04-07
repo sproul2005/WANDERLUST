@@ -1,9 +1,11 @@
-const { required } = require("joi");
+ const { required } = require("joi");
 const mongoose=require("mongoose");
 const Schema=mongoose.Schema;
 
 const reviewSchema=new Schema({
-    comment:String,
+    comment:{
+       type: String,
+    },
     rating:{
         type:Number,
         required:true,
@@ -15,7 +17,7 @@ const reviewSchema=new Schema({
         default:Date.now(),
     },
     author:{
-        type:Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:"User",
     },
 });

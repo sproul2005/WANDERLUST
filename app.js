@@ -13,6 +13,8 @@ const ExpressError=require("./utils/ExpressError.js");
 const session=require("express-session");
 const MongoStore=require("connect-mongo");
 const flash=require("connect-flash");
+
+
 const passport=require("passport");
 const LocalStrategy=require("passport-local");
 const User=require("./models/user.js");
@@ -43,6 +45,8 @@ app.use(methodOverride("_method"));
 app.engine('ejs',ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
+
+
 const store=MongoStore.create({
     mongoUrl:dbUrl,
     crypto:{
@@ -67,10 +71,6 @@ const sessionOptions={
     },
 };
 
-// app.get("/",(req,res)=>{
-//     res.send("Hi, I am munu");
-// });
-
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -90,14 +90,6 @@ app.use((req,res,next)=>{
     next();
 });
 
-// app.get("/demouser",async(req,res)=>{
-//     let fakeUser=new User({
-//         email:"student@gmail.com",
-//         username:"delta-student",
-//     });
-//     let registeredUser=await User.register(fakeUser,"helloWorld");
-//     res.send(registeredUser);
-// });
 
 
 app.use("/listings",listingRouter);
@@ -112,7 +104,7 @@ app.all("*",(req,res,next)=>{
 app.use((err,req,res,next)=>{
     let{statusCode=500,message="Something went wrong"}=err;
     res.status(statusCode).render("error.ejs",{message});
-    //res.send(statusCode).send(message);
+    
 });
 
 app.listen(8080,()=>{
